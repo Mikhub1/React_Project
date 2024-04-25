@@ -1,3 +1,3 @@
 # React_Project
 
-The first project will focus on React a weather page using react. The first stage will focus on running a functional page that return a specific. More modifications will be made.
+The Repository will focus on using React to build a weather page. Typescript language type is implemented and Vite is the build tool used to host the code and improve experience for the user
