@@ -15,17 +15,17 @@ img {
 
 }
 
-input[type=text] {
-  padding: 10px;
+#city{
+  padding: 20px;
   background-color: whitesmoke;
   width: 80%;
-  padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   }
   
 
 body {
+  padding: 12px 20px;
   margin: 0;
   display: flex;
   place-items: center;

@@ -1,22 +1,24 @@
 import Weather from './Weather';
 import "./App.css"
 import sun from './images/sun.jpg'
-import Button from "./Button"
+import Form from './Form';
+import React from "react"
 
 
 function App(){
+
   return (
     <div>
     <div><Weather></Weather></div>
     <img src = {sun} alt= ''/>
     <p></p>
     <p></p>
-    <input id="city" name="city" type="text"></input>
-    <Button color="danger" onClick={() => setalertVisibility(true)}>Weather Info</Button>
+    <Form ></Form>
     <p></p>
-    <div id = "box"> The details for the city is stated below</div>
 </div>
 
 )
 }
 export default App
+
+
