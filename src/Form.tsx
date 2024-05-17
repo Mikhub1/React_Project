@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import Generate_Url from "./Url";
 
@@ -21,30 +21,26 @@ interface WeatherData {
 
 const Form = () => {
   const nameRef = useRef<HTMLInputElement>(null);
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("Ibadan");
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [error, setError] = useState<string>("");
   //const [apiUrl, setApiUrl] = useState("");
 
-  const handleSubmit =  (event: FormEvent) => {
-    event.preventDefault();
-    if (nameRef.current !== null) {
-      setCity(nameRef.current.value);
-    }
+  const fetchWeatherData = (city: string) => {
     // Call Generate_Url function to get the complete URL
-    const apiUrl = Generate_Url() + nameRef.current?.value;
+    const apiUrl = Generate_Url() + city;
     console.log(apiUrl);
-
-    // Make a GET request using the Fetch API
-     fetch(apiUrl)
+  
+  // Make a GET request using the Fetch API
+  fetch(apiUrl)
       .then((response) => {
-        //if (!response.ok) {
-        // Throw an error if response is not ok
-        //we handle the response by checking if it's okay using the response.ok property. If the response is okay,
-        //we convert it to JSON and process the user data.
-        //throw new Error("Network response was not ok");
-        //}
-        return response.json();
+    //if (!response.ok) {
+      // Throw an error if response is not ok
+      //we handle the response by checking if it's okay using the response.ok property. If the response is okay,
+      //we convert it to JSON and process the user data.
+      //throw new Error("Network response was not ok");
+      //}
+      return response.json();
       })
       .then((cityData) => {
         // checking validity of response
@@ -62,6 +58,21 @@ const Form = () => {
         setError("Error fetching weather data: " + error.message);
         console.error("Error fetching weather data:", error);
       });
+
+    }
+      
+      useEffect(() => {
+        // Fetch weather data for the default city when the component mounts
+        fetchWeatherData("Ibadan");
+      }, []);
+
+      const handleSubmit =  (event: FormEvent) => {
+        event.preventDefault();
+        if (nameRef.current !== null) {
+          const newCity = nameRef.current.value;
+          setCity(newCity);
+          fetchWeatherData(newCity);
+        }
   };
 
   return (
@@ -70,11 +81,12 @@ const Form = () => {
         <label htmlFor="city" className="form-label">
           City:
         </label>
-        <input ref={nameRef} id="city" className="form-control" />
+        <input ref={nameRef} id="city" className="form-control" placeholder={"Ibadan"}/>
         <button type="submit">Weather Info</button>
       </div>
       <div id="box">
-        {weatherData && (
+        {weatherData && 
+        (
           <>
             <h2>Weather Details for {city}</h2>
             <p>Temperature: {weatherData.main.temp} K</p>
